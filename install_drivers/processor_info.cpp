@@ -12,23 +12,25 @@
 
 
 int main(int argc, char * argv[]) {
-	std::cout << "Number of arguments " << argc << std::endl;
+	OutputDebugStringA("Number of arguments " + argc);
 	Registry r;
 	if (argc == 2) {
 		if (strcmp(argv[1], "-d") == 0) {
+			OutputDebugStringA("Option -d is selected. Setting up hard disk.");
 			Harddrive d;
 			d.SetUpPartitions();
 			r.EditRunOnce(HARDDRIVE);
 		}
 		else if (strcmp(argv[1], "-m") == 0) {
+			OutputDebugStringA("Option -m is selected. Installing motherboard drivers.");
 			r.EditRunOnce(MOTHERBOARD);
 		}
 		else if (strcmp(argv[1], "-n") == 0) {
+			OutputDebugStringA("Option -m is selected. Installing network drivers.");
 			r.EditRunOnce(NETWORK);
 		}
 	}
 	for (int i = 0; i < argc; i++) {
-		std::cout << argv[i] << std::endl;
+		OutputDebugStringA(argv[i]);
 	}
-	//GetDriverMotherboard();
 }

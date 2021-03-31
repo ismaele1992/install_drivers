@@ -6,49 +6,43 @@ Registry::Registry()
 
 bool Registry::EditRunOnce(DRIVER d)
 {
-	char buffer[256];
-	bool run = false;
-	std::string next_device = "";
+	HKEY hKEY = NULL;
+	wchar_t szValue[256] = {};
+	wchar_t szOption[3] = {};
+	LONG result;
 	switch (d) {
 	case HARDDRIVE:
-		next_device = "-m";
+		wcscpy_s(szOption, L"-m");
 		break;
 	case MOTHERBOARD:
-		next_device = "-n";
+		wcscpy_s(szOption, L"-n");
 		break;
 	case NETWORK:
-		next_device = "";
+		wcscpy_s(szOption, L"");
 		break;
 	}
-	// If next device is empty that means there is no additional runonce entry to add, which means
-	// the registry is not editted.
-	if (std::strcmp(next_device.c_str(), "") == 0) {
-		std::cout << "No need to edit Run Once" << std::endl;
+	if (wcscmp(szOption, L"") != 0) {
+		wcscpy_s(szValue, 256, this->pathExe);
+		wcscat_s(szValue, 256, L"install_drivers.exe"); // Name of the .exe file
+		wcscat_s(szValue, 256, L" ");
+		wcscat_s(szValue, 256, szOption);	// Argument of the command
+		result = RegCreateKeyExW(HKEY_LOCAL_MACHINE, this->runOnceKey, 0, NULL, 0, (KEY_WRITE | KEY_READ), NULL, &hKEY, NULL);
+		OutputDebugStringA("Result of creating key: "  + result);
+		if (result == 0) {
+			DWORD len_word = (wcslen(szValue) + 1) * 2;
+			result = RegSetValueExW(hKEY, L"Install", 0, REG_SZ, (BYTE*)szValue, len_word);
+			OutputDebugStringA("Result of modifying key: " + result );
+		}
+		if (hKEY != NULL) {
+			OutputDebugStringA("Cleaning up used Registry Key");
+			RegCloseKey(hKEY);
+			hKEY = NULL;
+		}
 	}
 	else {
-		std::string command = "reg add ";
-		command += this->run_once_reg_key_user;
-		command += " /v Install /t REG_SZ /d \"";
-		command += this->installer_path;
-		command += " ";
-		command += next_device;
-		command += "\" /f\n";
-		std::cout << command << std::endl;
-		//system(command.c_str());
-		FILE* pipe = _popen(command.c_str(), "r");
-		if (!pipe) {
-			throw std::runtime_error("Not able to run drivers.exe");
-		}
-		else {
-			run = true;
-		}
-		Sleep(5000);
-		while (fgets(buffer, sizeof buffer, pipe) != NULL) {
-			std::cout << buffer << std::endl;
-		}
-		_pclose(pipe);
+		OutputDebugStringA("Execution flow has ended. There is nothing to write on Windows registry");
 	}
-	return run;
+	return true;
 }
 
 Registry::~Registry()
