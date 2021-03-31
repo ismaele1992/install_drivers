@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\Isma_VM\Documents\install_drivers\Release\install_drivers.exe</FullPath>
+      <FullPath>C:\Repositories\install_drivers\Release\install_drivers.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

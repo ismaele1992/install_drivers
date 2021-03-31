@@ -49,13 +49,10 @@ int Harddrive::GetPartitionsInformation()
 	std::regex base_regex("([0-9]{1,})([ |\t]*)(.*[:])([ |\t]*)([0-9]{1,})([ |\t]*)([0-9]{1,})(.*)");
 	std::cmatch cm;
 	while (fgets(buffer, sizeof buffer, pipe) != NULL) {
-		if (line == 1) {
-			if (std::regex_search(buffer, cm, base_regex)) {
-				std::cout << "Found condition " << std::endl;
-				StorePartition(cm);
-			}
+		if (std::regex_search(buffer, cm, base_regex)) {
+			std::cout << "Found condition " << std::endl;
+			StorePartition(cm);
 		}
-		line++;
 	}
 	this->ShowPartitions();
 	return 0;
@@ -160,6 +157,9 @@ void Harddrive::SetUpPartitions()
 				std::cout << "Not enough space to do partitioning." << std::endl;
 			}
 		}
+	}
+	else {
+		std::cout << "This disk has already more than one partition created. Skipping process of creating partitions" << std::endl;
 	}
 }
 
