@@ -2,7 +2,9 @@
 
 Harddrive::Harddrive()
 {
-	this->hardisk_size_bytes = GetPartitionsInformation();
+	//this->hardisk_size_bytes = GetPartitionsInformation();
+	this->GetHardDrives();
+	this->GetPartitionsInformation();
 }
 
 void Harddrive::GetHardDrives()
@@ -12,14 +14,30 @@ void Harddrive::GetHardDrives()
 	std::regex condition("([0-9]{1,})([ |\t]*)([0-9]{1,})(.*)");
 	std::cmatch cm;
 	if (!pipe) throw std::runtime_error("Not able to get harddrives information");
-	std::cout << "Displying available devices." << std::endl;
 	while (fgets(buffer, sizeof buffer, pipe) != NULL) {
 		if (std::regex_search(buffer, cm, condition)) {
-			std::cout << "Index of harddrive : " << cm[1] << std::endl;
-			std::cout << "Index of harddrive : " << cm[3] << std::endl;
+			std::map<std::string, std::string> aux;
+			aux["Index"] = cm[1];
+			aux["Size"] = cm[3];
+			aux["SizeGB"] = std::to_string(this->ToGigaBytes(cm[3]));
+			this->harddrives.push_back(aux);
 		}
 	}
-	std::cout << "End display." << std::endl;
+}
+
+std::map<std::string, std::string> Harddrive::SelectDiskByIndex(std::string index)
+{
+	std::map<std::string, std::string> aux;
+	int i = 0;
+	bool found = false;
+	while (i < this->harddrives.size() && !found) {
+		if (std::strcmp(this->harddrives[i]["Index"].c_str(), index.c_str()) == 0) {
+			aux = this->harddrives[i];
+			found = true;
+		}
+		i++;
+	}
+	return aux;
 }
 
 int Harddrive::GetPartitionsInformation()
@@ -124,18 +142,23 @@ void Harddrive::SetUpPartitions()
 	}
 	if (disk_units == 1) {
 		double free_space = stod(this->partitions[j]["Free_Space"]);
-		double available_space = std::stod(this->partitions[j]["Size"]) - free_space;
-		std::cout << "Used space in bytes : " << available_space << std::endl;
-		std::cout << "Used space in Gigabytes : " << this->ToGigaBytes(std::to_string(available_space)) << std::endl;
-		double space_to_extend = (std::stod(this->partitions[j]["Size"]) / 2) - this->ToBytes("20") - available_space;
-		std::cout << "Available space to extend in bytes : " << space_to_extend << std::endl;
-		std::cout << "Available space to extend in Gigabytes : " << this->ToGigaBytes(std::to_string(space_to_extend)) << std::endl;
-		if (std::stod(this->partitions[j]["SizeGB"]) > 400) {
-			this->CreateDiskPartScript(space_to_extend, this->partitions[j]["Index"], diskpart_file);
-			this->RunDiskPart(diskpart_file);
-		}
-		else {
-			std::cout << "Not enough space to do partitioning." << std::endl;
+		// Calculating used space by the partition
+		double occupied_space = std::stod(this->partitions[j]["Size"]) - free_space;
+		std::cout << "Used space in bytes : " << occupied_space << std::endl;
+		std::cout << "Used space in Gigabytes : " << this->ToGigaBytes(std::to_string(occupied_space)) << std::endl;
+		std::map<std::string, std::string> aux = this->SelectDiskByIndex(this->partitions[j]["Index"]);
+		// Check if the query of the physical drive returns something
+		if (aux.size() > 0) {
+			double space_to_extend = (std::stod(aux["Size"]) / 2) - this->ToBytes("20") - occupied_space;
+			std::cout << "Available space to extend in bytes : " << space_to_extend << std::endl;
+			std::cout << "Available space to extend in Gigabytes : " << this->ToGigaBytes(std::to_string(space_to_extend)) << std::endl;
+			if (std::stod(aux["SizeGB"]) > 400) {
+				this->CreateDiskPartScript(space_to_extend, this->partitions[j]["Index"], diskpart_file);
+				this->RunDiskPart(diskpart_file);
+			}
+			else {
+				std::cout << "Not enough space to do partitioning." << std::endl;
+			}
 		}
 	}
 }
@@ -145,10 +168,10 @@ void Harddrive::CreateDiskPartScript(double size, std::string disk, const char* 
 	std::ofstream of(diskpart_file, std::ios::out);
 	if (of) {
 		of << "select disk " << disk << std::endl;
-		of << "select partition 1" << std::endl;
+		of << "select partition 2" << std::endl;
 		of << "extend size=" << std::to_string(std::llround(this->ToMegaBytes(size))) << std::endl;
 		of << "select disk " << disk << std::endl;
-		of << "create partition extended" << std::endl;
+		of << "create partition primary" << std::endl;
 		of << "assign letter=D" << std::endl;
 		of << "format quick label=\"Extended\" fs=ntfs" << std::endl;
 		of << "EXIT" << std::endl;

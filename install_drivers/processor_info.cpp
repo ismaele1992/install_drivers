@@ -17,8 +17,7 @@ int main(int argc, char * argv[]) {
 	if (argc == 2) {
 		if (strcmp(argv[1], "-d") == 0) {
 			Harddrive d;
-			//d.SetUpPartitions();
-			d.GetHardDrives();
+			d.SetUpPartitions();
 			r.EditRunOnce(HARDDRIVE);
 		}
 		else if (strcmp(argv[1], "-m") == 0) {

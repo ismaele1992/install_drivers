@@ -22,6 +22,7 @@ private:
 public:
 	Harddrive();
 	void GetHardDrives();
+	std::map<std::string, std::string> SelectDiskByIndex(std::string index);
 	int GetPartitionsInformation();
 	void StorePartition(std::cmatch cm);
 	void ShowPartitions();
