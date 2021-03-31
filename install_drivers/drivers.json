@@ -1,0 +1,43 @@
+{
+  "drivers": {
+	"motherboard": [
+		{
+		  "name": "D3603-A1",
+		  "path": "C:\\Users\\xpad\\Documents\\Drivers\\Motherboard\\D3603-A1\\"
+		},
+		{
+		  "name": "Z390 Pro4",
+		  "path": "C:\\Users\\xpad\\Documents\\Drivers\\Motherboard\\Z390-Pro4\\"
+		},
+		{
+		  "name": "WS X299 SAGE",
+		  "path": "C:\\Users\\xpad\\Documents\\Drivers\\Motherboard\\WS-X299-SAGE\\"
+		},
+		{
+		  "name": "PRIME X570-PRO",
+		  "path": "C:\\Users\\xpad\\Documents\\Drivers\\Motherboard\\PRIME-X570-PRO\\"
+		},
+		{
+		  "name": "X11SSH-LN4F",
+		  "path": "C:\\Users\\xpad\\Documents\\Drivers\\Motherboard\\PRIME-X570-PRO\\X11SSH-LN4F"
+		} 
+	],
+	"ethernet": [
+		{
+			"name" : "EX-6074-2",
+			"hardware_id" : "{USB\\VID_0BDA&PID_8153&REV_3100, USB\\VID_0BDA&PID_8153}",
+			"path" : "C:\\Users\\xpad\\Documents\\Drivers\\EthernetCard\\EX-6074-2\\"
+		},
+		{
+			"name" : "EX-6084",
+			"hardware_id" : "{PCI\\VEN_10EC&DEV_8168&SUBSYS_012310EC&REV_0C, PCI\\VEN_10EC&DEV_8168&SUBSYS_012310EC, PCI\\VEN_10EC&DEV_8168&CC_020000, PCI\\VEN_10EC&DEV_8168&CC_0200}",
+			"path" : "C:\\Users\\xpad\\Documents\\Drivers\\EthernetCard\\EX-6084\\"
+		},
+		{
+			"name" : "Intel-I350",
+			"hardware_id" : "{PCI\\VEN_8086&DEV_1521&SUBSYS_03091DCF&REV_01, PCI\\VEN_8086&DEV_1521&SUBSYS_03091DCF, PCI\\VEN_8086&DEV_1521&CC_020000, PCI\\VEN_8086&DEV_1521&CC_0200}",
+			"path" : "C:\\Users\\xpad\\Documents\\Drivers\\EthernetCard\\Intel-I350\\"
+		}
+	]
+  }
+}

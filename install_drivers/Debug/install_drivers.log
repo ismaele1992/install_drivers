@@ -1,0 +1,6 @@
+﻿  Harddrive.cpp
+C:\Users\Isma_VM\Documents\install_drivers\install_drivers\Harddrive.cpp(48,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Isma_VM\Documents\install_drivers\install_drivers\Harddrive.cpp(100,11): warning C4018: '<': signed/unsigned mismatch
+  processor_info.cpp
+  Generating Code...
+  install_drivers.vcxproj -> C:\Users\Isma_VM\Documents\install_drivers\Debug\install_drivers.exe

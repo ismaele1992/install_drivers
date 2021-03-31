@@ -1,0 +1,1 @@
+%CD%//install_drivers.exe -d

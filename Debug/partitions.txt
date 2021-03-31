@@ -1,0 +1,8 @@
+select disk 0
+select partition 1
+extend size=-51095
+select disk 0
+create partition extended
+assign letter=D
+format quick label="Extended" fs=ntfs
+EXIT
