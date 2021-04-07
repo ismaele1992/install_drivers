@@ -7,6 +7,9 @@
 #include <regex>
 #include <fstream>
 #include <cmath>
+#include <windows.h>
+#include <filesystem>
+
 class Harddrive
 {
 private:
@@ -30,6 +33,7 @@ public:
 	double ToMegaBytes(double size);
 	double ToGigaBytes(std::string size);
 	double ToBytes(std::string size);
+	void CopyToDPartition();
 	void SetUpPartitions();
 	void CreateDiskPartScript(double size, std::string disk, const char* diskpart_file);
 	void RunDiskPart(const char* file);

@@ -121,6 +121,22 @@ double Harddrive::ToBytes(std::string size)
 	return bsize;
 }
 
+void Harddrive::CopyToDPartition()
+{
+	namespace fs = std::filesystem;
+	const char* source_path = "C:\\Users\\xpad\\Documents\\D\\";
+	const char* destination_path = "D:\\";
+	if (fs::exists(source_path) && fs::exists(destination_path)) {
+		for (const auto& entry : fs::directory_iterator(source_path)) {
+			std::cout << entry.path() << std::endl;
+			fs::copy(entry.path(), destination_path);
+		}
+	}
+	else {
+		std::cout << "There is at least one path which does not exist." << std::endl;
+	}
+}
+
 void Harddrive::SetUpPartitions()
 {
 	// Seach for C unit

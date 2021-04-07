@@ -18,7 +18,8 @@ int main(int argc, char * argv[]) {
 		if (strcmp(argv[1], "-d") == 0) {
 			OutputDebugStringA("Option -d is selected. Setting up hard disk.");
 			Harddrive d;
-			d.SetUpPartitions();
+			//d.SetUpPartitions();
+			d.CopyToDPartition();
 			r.EditRunOnce(HARDDRIVE);
 		}
 		else if (strcmp(argv[1], "-m") == 0) {
