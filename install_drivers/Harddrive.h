@@ -9,10 +9,11 @@
 #include <cmath>
 #include <windows.h>
 #include <filesystem>
-
+#include "Logger.h"
 class Harddrive
 {
 private:
+	const char* classname = "Harddrive";
 	double hardisk_size_bytes;
 	double hardisk_size_gigabytes;
 	double hardisk_size_free_bytes;

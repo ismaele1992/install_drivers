@@ -1,10 +1,13 @@
-﻿  Harddrive.cpp
-C:\Repositories\install_drivers\install_drivers\Harddrive.cpp(33,11): warning C4018: '<': signed/unsigned mismatch
-C:\Repositories\install_drivers\install_drivers\Harddrive.cpp(80,21): warning C4018: '<': signed/unsigned mismatch
-C:\Repositories\install_drivers\install_drivers\Harddrive.cpp(149,11): warning C4018: '<': signed/unsigned mismatch
+﻿  Logger.cpp
+C:\Repositories\install_drivers\install_drivers\Logger.cpp(48,13): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Repositories\install_drivers\install_drivers\Logger.cpp(59,13): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Repositories\install_drivers\install_drivers\Logger.cpp(71,13): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Repositories\install_drivers\install_drivers\Logger.cpp(79,13): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Repositories\install_drivers\install_drivers\Logger.cpp(89,13): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Repositories\install_drivers\install_drivers\Logger.cpp(101,13): warning C4834: discarding return value of function with 'nodiscard' attribute
   Generating code
-  2 of 1423 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+  3 of 1473 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    3 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   install_drivers.vcxproj -> C:\Repositories\install_drivers\Release\install_drivers.exe

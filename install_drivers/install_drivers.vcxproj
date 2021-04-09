@@ -137,6 +137,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Harddrive.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Motherboard.cpp" />
     <ClCompile Include="NetworkAdapters.cpp" />
     <ClCompile Include="processor_info.cpp" />
@@ -144,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Harddrive.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="Motherboard.h" />
     <ClInclude Include="NetworkAdapters.h" />
     <ClInclude Include="Registry.h" />

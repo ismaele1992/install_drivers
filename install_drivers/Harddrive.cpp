@@ -78,10 +78,10 @@ void Harddrive::ShowPartitions()
 	std::cout << "Showing hard drives: " << std::endl;
 	if (this->partitions.size() > 0) {
 		for (int i = 0; i < partitions.size(); i++) {
-			std::cout << "Index of the hard drive : " << this->partitions[i]["Index"] << std::endl;
-			std::cout << "Unit letter of the hard drive : " << this->partitions[i]["Unit"] << std::endl;
-			std::cout << "Showing size of the hard drive in Bytes : " << this->partitions[i]["Size"] << std::endl;
-			std::cout << "Showing size of the hard drive in Gigabytes : " << this->partitions[i]["SizeGB"] << std::endl;
+			Logger::getInstance(classname)->logging_debug() << "Index of the hard drive : {0}" << this->partitions[i]["Index"];
+			Logger::getInstance(classname)->logging_debug() << "Unit letter of the hard drive : " << this->partitions[i]["Unit"];
+			Logger::getInstance(classname)->logging_debug() << "Showing size of the hard drive in Bytes : " << this->partitions[i]["Size"];
+			Logger::getInstance(classname)->logging_debug() << "Showing size of the hard drive in Gigabytes : " << this->partitions[i]["SizeGB"];
 		}
 	}
 }
@@ -126,6 +126,7 @@ void Harddrive::CopyToDPartition()
 	namespace fs = std::filesystem;
 	const char* source_path = "C:\\Users\\xpad\\Documents\\D\\";
 	const char* destination_path = "D:\\";
+	Logger::getInstance(classname)->logging_info() << "Copying files to D location";
 	if (fs::exists(source_path) && fs::exists(destination_path)) {
 		for (const auto& entry : fs::directory_iterator(source_path)) {
 			std::cout << entry.path() << std::endl;
@@ -133,7 +134,7 @@ void Harddrive::CopyToDPartition()
 		}
 	}
 	else {
-		std::cout << "There is at least one path which does not exist." << std::endl;
+		Logger::getInstance(classname)->logging_error() << "There is at least a location which is not valid.";
 	}
 }
 
