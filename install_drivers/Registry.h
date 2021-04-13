@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <fstream>
 #include <istream>
+#include "Logger.h"
 typedef enum {
 	HARDDRIVE,
 	MOTHERBOARD,
@@ -13,9 +14,9 @@ typedef enum {
 class Registry
 {
 private:
-	std::string run_once_reg_key = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce";
-	std::string run_once_reg_key_user = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce";
-	std::string installer_path = "C:\\Users\\Isma_VM\\Documents\\install_drivers\\Debug\\install_drivers.exe";
+	const char* classname = "Registry";
+	const PCWSTR runOnceKey = L"Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce";
+	const PCWSTR pathExe = L"C:\\Users\\xpad\\Documents\\Drivers\\";
 public:
 	Registry();
 	bool EditRunOnce(DRIVER d);

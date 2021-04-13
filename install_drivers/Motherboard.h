@@ -5,9 +5,11 @@
 #include <istream>
 #include <json/value.h>
 #include <json/json.h>
+#include "Logger.h"
 class Motherboard
 {
 private:
+	const char* classname = "Motherboard";
 	std::string query_motherboard = "wmic baseboard get product";
 	std::string model;
 	std::string driver_path;

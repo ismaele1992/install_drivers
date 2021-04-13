@@ -5,6 +5,7 @@
 #include <istream>
 #include <json/value.h>
 #include <json/json.h>
+#include "Logger.h"
 class NetworkAdapters
 {
 private:
@@ -13,6 +14,7 @@ private:
 	std::string model_id;
 	std::vector<std::string> network_adapters;
 	std::string path_driver;
+	const char* classname = "NetworkAdapters";
 public:
 	NetworkAdapters();
 	int GetNumberNetworkAdapters();

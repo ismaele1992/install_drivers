@@ -14,18 +14,18 @@ int NetworkAdapters::GetNumberNetworkAdapters()
 
 void NetworkAdapters::ShowListNetworkAdapters()
 {
-	std::cout << "Showing detected network adapters : " << std::endl;
+	Logger::getInstance(this->classname)->logging_info() << "Showing detected network adapters : ";
 	for (auto it = this->network_adapters.begin(); it != this->network_adapters.end(); ++it) {
-		std::cout << *it << std::endl;
+		Logger::getInstance(this->classname)->logging_info() << *it;
 	}
 }
 
 void NetworkAdapters::ShowNetworkAdaptersInformation()
 {
-	std::cout << this->model << std::endl;
-	std::cout << this->model_id << std::endl;
-	std::cout << this->path_driver << std::endl;
-	std::cout << this->GetNumberNetworkAdapters() << std::endl;
+	Logger::getInstance(this->classname)->logging_info() << "Model of network adapter: " << this->model;
+	Logger::getInstance(this->classname)->logging_info() << "Model ID: " << this->model_id;
+	Logger::getInstance(this->classname)->logging_info() << "Path of the driver: " << this->path_driver;
+	Logger::getInstance(this->classname)->logging_info() << "Number of network adapters: " << this->GetNumberNetworkAdapters();
 	ShowListNetworkAdapters();
 }
 
@@ -54,9 +54,9 @@ std::string NetworkAdapters::GetNetworkAdapterDrivers()
 	Json::Value paths;
 	std::ifstream drivers_json("drivers.json");
 	drivers_json >> paths;
-	std::cout << paths << std::endl;
+	Logger::getInstance(this->classname)->logging_debug() << paths;
 	for (auto it = paths["drivers"]["ethernet"].begin(); it != paths["drivers"]["ethernet"].end(); ++it) {
-		std::cout << *it << std::endl;
+		Logger::getInstance(this->classname)->logging_debug() << *it;
 	}
 	return this->path_driver;
 }
