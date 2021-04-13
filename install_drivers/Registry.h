@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <fstream>
 #include <istream>
+#include "Logger.h"
 typedef enum {
 	HARDDRIVE,
 	MOTHERBOARD,
@@ -13,6 +14,7 @@ typedef enum {
 class Registry
 {
 private:
+	const char* classname = "Registry";
 	const PCWSTR runOnceKey = L"Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce";
 	const PCWSTR pathExe = L"C:\\Users\\xpad\\Documents\\Drivers\\";
 public:

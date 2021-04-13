@@ -50,7 +50,7 @@ int Harddrive::GetPartitionsInformation()
 	std::cmatch cm;
 	while (fgets(buffer, sizeof buffer, pipe) != NULL) {
 		if (std::regex_search(buffer, cm, base_regex)) {
-			std::cout << "Found condition " << std::endl;
+			Logger::getInstance(classname)->logging_debug() << "Found partition which matches the search.";
 			StorePartition(cm);
 		}
 	}
@@ -75,7 +75,7 @@ void Harddrive::StorePartition(std::cmatch cm)
 
 void Harddrive::ShowPartitions()
 {
-	std::cout << "Showing hard drives: " << std::endl;
+	Logger::getInstance(classname)->logging_info() << "Showing hard drives: ";
 	if (this->partitions.size() > 0) {
 		for (int i = 0; i < partitions.size(); i++) {
 			Logger::getInstance(classname)->logging_debug() << "Index of the hard drive : {0}" << this->partitions[i]["Index"];
@@ -129,7 +129,7 @@ void Harddrive::CopyToDPartition()
 	Logger::getInstance(classname)->logging_info() << "Copying files to D location";
 	if (fs::exists(source_path) && fs::exists(destination_path)) {
 		for (const auto& entry : fs::directory_iterator(source_path)) {
-			std::cout << entry.path() << std::endl;
+			Logger::getInstance(classname)->logging_debug() << entry.path() << std::endl;
 			fs::copy(entry.path(), destination_path);
 		}
 	}
@@ -148,7 +148,7 @@ void Harddrive::SetUpPartitions()
 	const char* diskpart_file = "diskpart.txt";
 	while (i < this->partitions.size() && disk_units <= 1){
 		if (std::strcmp("0", this->partitions[i]["Index"].c_str()) == 0) {
-			std::cout << "Found disk with index 0 and letter " << this->partitions[i]["Unit"] << std::endl;
+			Logger::getInstance(this->classname)->logging_debug() << "Found disk with index 0 and letter " << this->partitions[i]["Unit"];
 			disk_units++;
 			j = i;
 		}
@@ -158,25 +158,25 @@ void Harddrive::SetUpPartitions()
 		double free_space = stod(this->partitions[j]["Free_Space"]);
 		// Calculating used space by the partition
 		double occupied_space = std::stod(this->partitions[j]["Size"]) - free_space;
-		std::cout << "Used space in bytes : " << occupied_space << std::endl;
-		std::cout << "Used space in Gigabytes : " << this->ToGigaBytes(std::to_string(occupied_space)) << std::endl;
+		Logger::getInstance(this->classname)->logging_debug() << "Used space in bytes : " << occupied_space;
+		Logger::getInstance(this->classname)->logging_debug() << "Used space in Gigabytes : " << this->ToGigaBytes(std::to_string(occupied_space));
 		std::map<std::string, std::string> aux = this->SelectDiskByIndex(this->partitions[j]["Index"]);
 		// Check if the query of the physical drive returns something
 		if (aux.size() > 0) {
 			double space_to_extend = (std::stod(aux["Size"]) / 2) - this->ToBytes("20") - occupied_space;
-			std::cout << "Available space to extend in bytes : " << space_to_extend << std::endl;
-			std::cout << "Available space to extend in Gigabytes : " << this->ToGigaBytes(std::to_string(space_to_extend)) << std::endl;
+			Logger::getInstance(this->classname)->logging_info() << "Available space to extend in bytes : " << space_to_extend;
+			Logger::getInstance(this->classname)->logging_info() << "Available space to extend in Gigabytes : " << this->ToGigaBytes(std::to_string(space_to_extend));
 			if (std::stod(aux["SizeGB"]) > 400) {
 				this->CreateDiskPartScript(space_to_extend, this->partitions[j]["Index"], diskpart_file);
 				this->RunDiskPart(diskpart_file);
 			}
 			else {
-				std::cout << "Not enough space to do partitioning." << std::endl;
+				Logger::getInstance(this->classname)->logging_error() << "Not enough space to do partitioning.";
 			}
 		}
 	}
 	else {
-		std::cout << "This disk has already more than one partition created. Skipping process of creating partitions" << std::endl;
+		Logger::getInstance(this->classname)->logging_warning() << "This disk has already more than one partition created. Skipping process of creating partitions";
 	}
 }
 
@@ -204,7 +204,7 @@ void Harddrive::RunDiskPart(const char* file)
 	FILE* pipe = _popen(command.c_str(), "r");
 	if (!pipe) throw std::runtime_error("Not able to run diskpart on CMD");
 	while (fgets(buffer, sizeof buffer, pipe) != NULL) {
-		std::cout << buffer << std::endl;
+		Logger::getInstance(classname)->logging_debug() << buffer << std::endl;
 	}
 	_pclose(pipe);
 }

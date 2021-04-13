@@ -25,5 +25,5 @@ public:
 	std::ofstream& logging_error();
 	std::ofstream& logging_debug();
 	std::ofstream& logging_info();
-	~Logger();
+	virtual ~Logger();
 };

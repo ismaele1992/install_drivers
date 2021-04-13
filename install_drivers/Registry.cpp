@@ -27,20 +27,20 @@ bool Registry::EditRunOnce(DRIVER d)
 		wcscat_s(szValue, 256, L" ");
 		wcscat_s(szValue, 256, szOption);	// Argument of the command
 		result = RegCreateKeyExW(HKEY_LOCAL_MACHINE, this->runOnceKey, 0, NULL, 0, (KEY_WRITE | KEY_READ), NULL, &hKEY, NULL);
-		OutputDebugStringA("Result of creating key: "  + result);
+		Logger::getInstance(this->classname)->logging_debug() << "Result of creating key: " << result;
 		if (result == 0) {
 			DWORD len_word = (wcslen(szValue) + 1) * 2;
 			result = RegSetValueExW(hKEY, L"Install", 0, REG_SZ, (BYTE*)szValue, len_word);
-			OutputDebugStringA("Result of modifying key: " + result );
+			Logger::getInstance(this->classname)->logging_debug() << "Result of modifying key: " << result;
 		}
 		if (hKEY != NULL) {
-			OutputDebugStringA("Cleaning up used Registry Key");
+			Logger::getInstance(this->classname)->logging_debug() << "Cleaning up used Registry Key";
 			RegCloseKey(hKEY);
 			hKEY = NULL;
 		}
 	}
 	else {
-		OutputDebugStringA("Execution flow has ended. There is nothing to write on Windows registry");
+		Logger::getInstance(this->classname)->logging_info() << "Execution flow has ended. There is nothing to write on Windows registry";
 	}
 	return true;
 }
