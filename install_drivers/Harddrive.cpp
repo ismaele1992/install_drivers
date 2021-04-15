@@ -2,7 +2,6 @@
 
 Harddrive::Harddrive()
 {
-	//this->hardisk_size_bytes = GetPartitionsInformation();
 	this->GetHardDrives();
 	this->GetPartitionsInformation();
 }

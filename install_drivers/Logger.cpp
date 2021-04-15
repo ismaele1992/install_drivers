@@ -23,8 +23,8 @@ Logger::Logger()
 
 Logger::Logger(const char* log_path)
 {
-	strcat_s(this->log_folder_path, log_path);
-	strcat_s(this->log_file_path, log_path);
+	strcpy_s(this->log_folder_path, log_path);
+	strcpy_s(this->log_file_path, log_path);
 	strcpy_s(this->classname, "Logger");
 	this->os.str("");
 	this->os.clear();
@@ -43,6 +43,16 @@ Logger* Logger::getInstance(const char* _classname)
 {
 	if (logger == nullptr) {
 		logger = new Logger();
+	}
+	strcpy_s(logger->classname, _classname);
+	std::remove(std::begin(logger->classname), std::end(logger->classname), '\n');
+	return logger;
+}
+
+Logger* Logger::getInstance(const char* _classname, const char* log_path)
+{
+	if (logger == nullptr) {
+		logger = new Logger(log_path);
 	}
 	strcpy_s(logger->classname, _classname);
 	std::remove(std::begin(logger->classname), std::end(logger->classname), '\n');

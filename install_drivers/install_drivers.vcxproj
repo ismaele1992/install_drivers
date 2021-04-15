@@ -136,6 +136,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Device.cpp" />
+    <ClCompile Include="GraphicCard.cpp" />
     <ClCompile Include="Harddrive.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Motherboard.cpp" />
@@ -144,6 +146,8 @@
     <ClCompile Include="Registry.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Device.h" />
+    <ClInclude Include="GraphicCard.h" />
     <ClInclude Include="Harddrive.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Motherboard.h" />

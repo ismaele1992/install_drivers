@@ -16,9 +16,10 @@ class Registry
 private:
 	const char* classname = "Registry";
 	const PCWSTR runOnceKey = L"Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce";
-	const PCWSTR pathExe = L"C:\\Users\\xpad\\Documents\\Drivers\\";
+	PCWSTR pathExe;
 public:
 	Registry();
+	Registry(const char* pathExe);
 	bool EditRunOnce(DRIVER d);
 	~Registry();
 };

@@ -20,6 +20,7 @@ public:
 	Logger();
 	Logger(const char* log_path);
 	static Logger * getInstance(const char * _classname);
+	static Logger * getInstance(const char * _classname, const char* log_path);
 	void setClassName(const char* classname);
 	std::ofstream& logging_warning();
 	std::ofstream& logging_error();

@@ -2,6 +2,12 @@
 
 Registry::Registry()
 {
+	this->pathExe = L"C:\\Users\\xpad\\Documents\\Drivers\\";
+}
+
+Registry::Registry(const char* pathExe)
+{
+	this->pathExe = (const wchar_t*)(pathExe);
 }
 
 bool Registry::EditRunOnce(DRIVER d)
@@ -23,7 +29,7 @@ bool Registry::EditRunOnce(DRIVER d)
 	}
 	if (wcscmp(szOption, L"") != 0) {
 		wcscpy_s(szValue, 256, this->pathExe);
-		wcscat_s(szValue, 256, L"install_drivers.exe"); // Name of the .exe file
+		//wcscat_s(szValue, 256, L"install_drivers.exe"); // Name of the .exe file
 		wcscat_s(szValue, 256, L" ");
 		wcscat_s(szValue, 256, szOption);	// Argument of the command
 		result = RegCreateKeyExW(HKEY_LOCAL_MACHINE, this->runOnceKey, 0, NULL, 0, (KEY_WRITE | KEY_READ), NULL, &hKEY, NULL);

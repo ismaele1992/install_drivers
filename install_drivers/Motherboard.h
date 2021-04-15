@@ -6,6 +6,8 @@
 #include <json/value.h>
 #include <json/json.h>
 #include "Logger.h"
+#include <filesystem>
+#include <zip.h>
 class Motherboard
 {
 private:
@@ -17,7 +19,11 @@ public:
 	Motherboard();
 	void ShowMotherboardInformation();
 	std::string GetMotherboardInformation();
-	std::string GetDriverMotherboard(char * drivers_file);
+	std::string GetDriverMotherboard(const char * drivers_file);
+	void SetUpModel(const char * model);
+	void SetUpDriverPath(const char * driver_path);
+	bool UnzipDriver(const char * source_path, const char * destination_path);
+	void InstallDriver();
 	~Motherboard();
 };
 
